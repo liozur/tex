@@ -15,20 +15,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Replace "../" with "debug/" in main.tex
+        run: sed -i 's|\.\./|tests/|g' main.tex
+
       - name: Compile LaTeX document with xelatex
         uses: xu-cheng/latex-action@v3
         with:
-          working_directory: src
           root_file: main.tex
           latexmk_use_xelatex: true
 
       - name: Rename PDF
-        run: mv src/main.pdf "src/${{ github.event.repository.name }}-${{ github.ref_name }}.pdf"
+        run: mv main.pdf "模版样本-${{ github.ref_name }}.pdf"
 
       - name: Create Release and Upload PDF
         uses: softprops/action-gh-release@v1
         with:
-          files: "src/${{ github.event.repository.name }}-${{ github.ref_name }}.pdf"
+          files: "模版样本-${{ github.ref_name }}.pdf"
           name: "${{ github.ref_name }}: ${{ github.event.repository.name }}"
           body: ""
           draft: false
