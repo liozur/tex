@@ -25,13 +25,13 @@ jobs:
           latexmk_use_xelatex: true
 
       - name: Rename PDF
-        run: mv main.pdf "${{ github.ref_name }}.pdf"
+        run: mv src/main.pdf "src/${{ github.event.repository.name }}-${{ github.ref_name }}.pdf"
 
       - name: Create Release and Upload PDF
         uses: softprops/action-gh-release@v1
         with:
-          files: "${{ github.ref_name }}.pdf"
-          name: "${{ github.ref_name }}"
+          files: "src/${{ github.event.repository.name }}-${{ github.ref_name }}.pdf"
+          name: "${{ github.ref_name }}: ${{ github.event.repository.name }}"
           body: ""
           draft: false
           prerelease: false
