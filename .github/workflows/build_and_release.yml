@@ -31,7 +31,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: "模版样本-${{ github.ref_name }}.pdf"
-          name: "${{ github.ref_name }}: ${{ github.event.repository.name }}"
+          name: "${{ github.ref_name }}"
           body: ""
           draft: false
           prerelease: false
