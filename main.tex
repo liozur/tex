@@ -1,0 +1,382 @@
+%!TEX program = xelatex
+
+% TODO: 尝试让 \endnote 的标记使用黑体数字
+% TODO: 尝试让 \endnote 命令可以用于 \title 之中
+% TODO: 尝试让 \tdoc 与 \tpart 在目录中可以显示页码范围
+% TODO: \authornote 与 \editornote 之间的垂直间距可能需要微调
+
+\documentclass[
+  zihao=5,
+  punct=kaiming,
+  linespread=1.4,
+  sub4section,
+]{ctexbook}
+
+% ------------------------------------------------------------------------------
+% 导言区
+% ------------------------------------------------------------------------------
+
+% ----------------------------------------------------------
+% 宏包加载
+% ----------------------------------------------------------
+
+\usepackage{bigfoot}
+\usepackage{calc}
+\usepackage{CJKfntef}
+\usepackage{enotez}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[hidelinks,hyperfootnotes=true]{hyperref}
+\usepackage{lipsum}
+\usepackage{perpage}
+\usepackage{scrextend}
+\usepackage{tikz}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{truncate}
+\usepackage{ulem}
+\usepackage{xcolor}
+\usepackage{xunicode-addon}
+
+\raggedbottom
+\newsavebox{\headerbox}
+
+\usepackage{xeCJKfntef}
+\xeCJKsetup{underdot/symbol={\raisebox{-5pt}{◦}}}
+\newcommand{\dotemph}[1]{\CJKunderdot{#1}}
+
+% ----------------------------------------------------------
+% 字体定义
+% ----------------------------------------------------------
+
+\setCJKmainfont{FZShuSong}
+[
+  Path           = fonts/,
+  BoldFont       = FZHei,
+  ItalicFont     = FZKai,
+  BoldItalicFont = FZHei,
+]
+\setCJKsansfont{FZHei}[Path=fonts/]
+\setCJKmonofont{HYFangSong}[Path=fonts/]
+
+\setCJKfamilyfont{ss}{FZShuSong}[Path=fonts/]
+\setCJKfamilyfont{fs}{FZFangSong}[Path=fonts/]
+\setCJKfamilyfont{ht}{FZHei}[Path=fonts/]
+\setCJKfamilyfont{kt}{FZKai}[Path=fonts/]
+\setCJKfamilyfont{xb}{FZXiaoBiaoSong}[Path=fonts/]
+\setCJKfamilyfont{xh}{FZXiHeiI}[Path=fonts/]
+\setCJKfamilyfont{sz}{Berthold Baskerville Book}[Path=fonts/]
+
+% 为封面设计的压缩字体
+\newCJKfontfamily\coverxb{FZXiaoBiaoSong}[Path=fonts/, FakeStretch=0.85]
+\newCJKfontfamily\coverxh{FZXiHeiI}[Path=fonts/, FakeStretch=0.85]
+
+% 定义经过轻微压缩的字体族 (90%)
+\newCJKfontfamily\modifiedss{FZShuSong}[Path=fonts/, FakeStretch=0.9]
+\newCJKfontfamily\modifiedfs{FZFangSong}[Path=fonts/, FakeStretch=0.9]
+\newCJKfontfamily\modifiedht{FZHei}[Path=fonts/, FakeStretch=0.9]
+\newCJKfontfamily\modifiedkt{FZKai}[Path=fonts/, FakeStretch=0.9]
+\newCJKfontfamily\modifiedxb{FZXiaoBiaoSong}[Path=fonts/, FakeStretch=0.9]
+\newCJKfontfamily\modifiedxh{FZXiHeiI}[Path=fonts/, FakeStretch=0.9]
+
+% 定义经过更轻微压缩的字体族 (95%)
+\newCJKfontfamily\modifiedmodifiedss{FZShuSong}[Path=fonts/, FakeStretch=0.95]
+\newCJKfontfamily\modifiedmodifiedfs{FZFangSong}[Path=fonts/, FakeStretch=0.95]
+\newCJKfontfamily\modifiedmodifiedht{FZHei}[Path=fonts/, FakeStretch=0.95]
+\newCJKfontfamily\modifiedmodifiedkt{FZKai}[Path=fonts/, FakeStretch=0.95]
+\newCJKfontfamily\modifiedmodifiedxb{FZXiaoBiaoSong}[Path=fonts/, FakeStretch=0.95]
+\newCJKfontfamily\modifiedmodifiedxh{FZXiHeiI}[Path=fonts/, FakeStretch=0.95]
+
+% 标点符号样式设置
+\xeCJKEditPunctStyle{kaiming}
+{
+  fixed-margin-ratio = 0.000,
+  mixed-margin-ratio = 1.000,
+  middle-margin-ratio = 0.000,
+}
+
+% ----------------------------------------------------------
+% 版面与边距
+% ----------------------------------------------------------
+
+\geometry{
+  paperwidth  = 437bp,
+  paperheight = 613bp,
+  top         = 94.3bp,
+  bottom      = 60.0bp,
+  left        = 76.5bp,
+  right       = 66.5bp,
+  headsep     = 25.0bp,
+  footskip    = 17.0bp,
+  footnotesep = 11bp,
+}
+
+% ----------------------------------------------------------
+% 页眉、页脚与页码
+% ----------------------------------------------------------
+
+\pagestyle{fancy}
+
+\fancyhf{}
+
+% --------------------------------------
+% 页眉与页脚
+% --------------------------------------
+
+\renewcommand{\headrulewidth}{0bp}
+
+\fancyhead[RO]{\rightmark}
+\fancyhead[LE]{\leftmark}
+
+\renewcommand{\chaptermark}[1]{%
+  \sbox{\headerbox}{\small\modifiedxh#1}%
+  \ifdim\wd\headerbox > 20em
+  \def\theheadermark{\truncate[……]{20em}{\small\modifiedxh#1}}%
+  \else
+  \def\theheadermark{\small\modifiedxh#1}%
+  \fi
+  \markboth{\theheadermark}{}%
+}
+
+\renewcommand{\sectionmark}[1]{%
+  \sbox{\headerbox}{\small\modifiedxh#1}%
+  \ifdim\wd\headerbox > 20em
+  \def\theheadermark{\truncate[……]{20em}{\small\modifiedxh#1}}%
+  \else
+  \def\theheadermark{\small\modifiedxh#1}%
+  \fi
+  \markright{\theheadermark}%
+}
+
+% --------------------------------------
+% 页码
+% --------------------------------------
+
+\fancyfoot[RO]{\fontspec{Berthold Baskerville Book}[Path=fonts/]\thepage}
+\fancyfoot[LE]{\fontspec{Berthold Baskerville Book}[Path=fonts/]\thepage}
+
+\assignpagestyle{\part}{empty}
+\fancypagestyle{empty}{%
+  \fancyhf{}%
+  \fancyfoot{}%
+}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[RO]{%
+    \makebox[0pt][l]{%
+      \hspace{3.5bp}%
+      \fontspec{Berthold Baskerville Book}[Path=fonts/]\thepage
+    }%
+  }%
+  \fancyfoot[LE]{\fontspec{Berthold Baskerville Book}[Path=fonts/]\thepage}%
+}
+
+% ----------------------------------------------------------
+% 注释
+% ----------------------------------------------------------
+
+\AtBeginUTFCommand[\textcircled]{\begroup\EnclosedNumbers}
+\AtEndUTFCommand[\textcircled]{\endgroup}
+
+\xeCJKDeclareCharClass{Default}{"24EA, "2460->"2473, "3251->"32BF}
+\newfontfamily\EnclosedNumbers{FZShuSong}[Path=fonts/]
+
+\makeatletter
+
+\setlength{\skip\footins}{2\baselineskip plus 2\baselineskip minus 2\baselineskip}
+
+% --------------------------------------
+% authornote
+% --------------------------------------
+
+\DeclareNewFootnote{B}
+
+\newcommand\defaultfootnoterule{\vskip 8.0bp\hrule width 74bp height 0.3bp\vskip 8.0bp}
+
+\let\fn@footnoteB\thefootnoteB
+\let\fn@fnfootnoteB\footnoteB
+
+\renewcommand{\thefootnoteB}{%
+  \CJKfamily{fs}%
+  \fontsize{8.0bp}{8.0bp}\selectfont%
+  （\fn@footnoteB）%
+}
+
+\newcommand{\authornote}[1]{%
+  \deffootnote[5em]{0em}{0em}{%
+    \raisebox{0.3bp}{%
+      \thefootnotemark\hspace{0.5em}%
+    }%
+  }%
+  \fn@fnfootnoteB{%
+    \CJKfamily{fs}%
+    \fontsize{9.0bp}{9.5bp}\selectfont%
+    #1%
+  }%
+  \hspace{-0.2em}%
+}
+
+% --------------------------------------
+% editornote
+% --------------------------------------
+
+\DeclareNewFootnote{C}
+
+\renewcommand\extrafootnoterule{\vskip -4.0bp\hrule width \textwidth height 0.3bp\vskip 8.0bp}
+
+\let\fn@fnfootnoteC\footnoteC
+
+\renewcommand\thefootnoteC{%
+  \textcircled{%
+    \arabic{footnoteC}%
+  }%
+}
+
+\newcommand{\editornote}[1]{%
+  \hspace{0.1em}%
+  \deffootnote{2em}{0em}{%
+    \raisebox{0.4bp}{%
+      \makebox[2em][l]{\thefootnotemark}%
+    }%
+  }%
+  \fn@fnfootnoteC{%
+    \CJKfamily{fs}%
+    \fontsize{9.0bp}{9.5bp}\selectfont%
+    #1%
+  }%
+}
+
+\MakePerPage{footnoteC}
+
+\makeatother
+
+% --------------------------------------
+% endnote
+% --------------------------------------
+
+\setenotez{
+  list-heading=\chapter*{\CJKfamily{kt}\fontsize{16.5bp}{16.5bp}\selectfont\ziju{1.500}{注释}},
+  backref=true
+}
+
+\renewcommand\enmark[1]{%
+  {\CJKfamily{ss}\fontsize{9.0bp}{9.75bp}\selectfont #1}\hspace{1em}%
+}
+
+\let\originalendnote\endnote
+
+\renewcommand{\endnote}[1]{%
+  \hspace{0.05em}%
+  \originalendnote{%
+    \begingroup
+    \leftskip=2.9em\relax%
+    \rightskip=0.1em\relax%
+    \CJKfamily{ss}%
+    \fontsize{9.0bp}{9.75bp}\selectfont%
+    \ziju{0.050}%
+    #1%
+    \par%
+    \endgroup%
+    \vspace{-0.6em}%
+  }%
+  \hspace{-0.05em}%
+}
+
+\fancypagestyle{endnotestyle}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0bp}%
+
+  \fancyhead[RO]{\small\CJKfamily{xh}\scalebox{0.9}[1.0]{\ziju{1.5pt}{注释}}}
+  \fancyhead[LE]{\small\CJKfamily{xh}\scalebox{0.9}[1.0]{\ziju{1.5pt}{注释}}}
+
+  \fancyfoot[RO]{%
+    \makebox[0pt][l]{%
+      \hspace{3.5bp}%
+      \fontspec{Berthold Baskerville Book}[Path=fonts/]\thepage
+    }%
+  }
+  \fancyfoot[LE]{\hspace{-4.5bp}\makebox[0pt][r]{\fontspec{Berthold
+  Baskerville Book}[Path=fonts/]\thepage}}
+}
+
+% --------------------------------------
+
+\input{commands}
+\input{titles}
+
+% ------------------------------------------------------------------------------
+% 正文
+% ------------------------------------------------------------------------------
+
+\begin{document}
+
+% --------------------------------------
+
+\input{../cover}
+
+% --------------------------------------
+
+\xeCJKsetup{CJKglue={\hskip 0bp plus 0.02\baselineskip minus 0.000\baselineskip}}
+\setlength{\parskip}{0bp}
+
+\clearpage
+\fancyhf{}
+\renewcommand{\headrulewidth}{0bp}
+
+\fancyhead[RO]{\small\CJKfamily{xh}\scalebox{0.9}[1.0]{\ziju{1.5pt}{目录}}}
+\fancyhead[LE]{\small\CJKfamily{xh}\scalebox{0.9}[1.0]{\ziju{1.5pt}{目录}}}
+\fancyfoot[RO]{%
+  \makebox[0pt][l]{%
+    \hspace{3.5bp}%
+    \fontspec{Berthold Baskerville Book}[Path=fonts/]\thepage
+  }%
+}
+\fancyfoot[LE]{\hspace{-4.5bp}\makebox[0pt][r]{\fontspec{Berthold Baskerville Book}[Path=fonts/]\thepage}}
+\pagestyle{fancy}
+
+\tableofcontents
+
+\mainmatter
+
+\clearpage
+\fancyhf{}
+\renewcommand{\headrulewidth}{0bp}
+
+\fancyhead[RO]{\rightmark}
+\fancyhead[LE]{\leftmark}
+\fancyfoot[RO]{%
+  \makebox[0pt][l]{%
+    \hspace{3.5bp}%
+    \fontspec{Berthold Baskerville Book}[Path=fonts/]\thepage
+  }%
+}
+\fancyfoot[LE]{\hspace{-4.5bp}\makebox[0pt][r]{\fontspec{Berthold Baskerville Book}[Path=fonts/]\thepage}}
+\pagestyle{fancy}
+
+\markboth{}{}
+
+% --------------------------------------
+
+\input{../content}
+
+% --------------------------------------
+
+\cleardoublepage
+
+\pagestyle{endnotestyle}
+
+\printendnotes
+
+\addcontentsline{toc}{chapter}{注释}
+
+% --------------------------------------
+
+\end{document}
+
+% ------------------------------------------------------------------------------
+% EOF
+% ------------------------------------------------------------------------------

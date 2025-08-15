@@ -1,0 +1,136 @@
+% ----------------------------------------------------------
+% 自定义命令
+% ----------------------------------------------------------
+
+% --- 副标题 (vicetitle) ---
+\newcommand{\vicetitle}[1]{%
+  \vspace{-3.0bp}%
+  \begin{center}%
+    \begin{minipage}[t]{\textwidth}%
+      \CJKfamily{fs}%
+      \fontsize{10.5bp}{10.5bp}\selectfont\ziju{0.010}%
+      \centering%
+      （#1）
+    \end{minipage}%
+    \vspace{18.5bp}%
+  \end{center}%
+}
+
+% --- 引言 (quote) ---
+\renewenvironment{quote}
+{%
+  \list{}{\rightmargin=0pt \leftmargin=0pt}%
+\item[]\relax\vspace{0.2em}
+  \fontsize{9.0bp}{9.75bp}\selectfont
+  \hspace*{2em}%
+}
+{%
+  \vspace{-0.2em}\endlist
+}
+
+% --- 落款 (closing) ---
+\newcommand{\closing}[2]{%
+  \vspace{10.5bp}%
+  \begin{flushright}%
+    \CJKfamily{fs}%
+    \fontsize{9.0bp}{9.5bp}\selectfont\ziju{0.010}%
+    #1
+    \if\relax#2\relax%
+    \else%
+    \par#2%
+    \fi%
+  \end{flushright}%
+}
+
+% --- 信息栏 (info) ---
+\newcommand{\info}[4]{%
+  \vspace{-4.0bp}%
+  \begin{center}%
+    \begin{minipage}[t]{\textwidth}%
+      \begin{minipage}[t]{0.40\textwidth}%
+        \begin{minipage}[t]{\textwidth}%
+          \CJKfamily{ss}%
+          \fontsize{9.0bp}{9.5bp}\selectfont\ziju{0.010}%
+          #1%
+        \end{minipage}%
+        \\%
+        \raisebox{-10bp}{%
+          \begin{minipage}[t]{\textwidth}%
+            \CJKfamily{ss}%
+            \fontsize{9.0bp}{9.5bp}\selectfont\ziju{0.010}%
+            #2%
+          \end{minipage}%
+        }%
+      \end{minipage}%
+      \hfill%
+      \begin{minipage}[t]{0.40\textwidth}%
+        \begin{minipage}[t]{\textwidth}%
+          \CJKfamily{ss}%
+          \fontsize{9.0bp}{9.5bp}\selectfont\ziju{0.010}%
+          #3%
+        \end{minipage}%
+        \\%
+        \raisebox{-10bp}{%
+          \begin{minipage}[t]{\textwidth}%
+            \CJKfamily{ss}%
+            \fontsize{9.0bp}{9.5bp}\selectfont\ziju{0.010}%
+            #4%
+          \end{minipage}%
+        }%
+      \end{minipage}%
+    \end{minipage}%
+  \end{center}%
+}
+
+% --- 占位框 (todo) ---
+\newcommand{\todo}{%
+  \par\vspace{12bp}%
+  \noindent%
+  \makebox[\textwidth][c]{%
+    \begin{tikzpicture}%
+      \node[%
+        draw,%
+        rectangle,%
+        line width=1pt,%
+        minimum height=5\baselineskip,%
+        text width=0.8\textwidth,%
+        align=center%
+      ]%
+      {这里应该添加一张图像或者一段文字};%
+    \end{tikzpicture}%
+  }%
+  \par\vspace{4bp}%
+}
+
+% --- 居中盒子 (centerbox) ---
+\newcommand{\centerbox}[1]{%
+  \par\removelastskip\vspace{\dimexpr\baselineskip - 1em\relax}%
+  \noindent%
+  \makebox[\textwidth][c]{%
+    \begin{minipage}{\textwidth}%
+      \centering%
+      #1%
+    \end{minipage}%
+  }%
+  \par\removelastskip\vspace{\dimexpr\baselineskip - 1em\relax}%
+}
+
+% --- 图像盒子 (imagebox) ---
+\newcommand{\imagebox}[1]{%
+  \par\vspace{\dimexpr\baselineskip - 1em\relax}%
+  \noindent%
+  \makebox[\textwidth][c]{%
+    \includegraphics[width=\textwidth]{#1}%
+  }%
+  \par\vspace{\dimexpr\baselineskip - 1.8em\relax}%
+}
+
+% --- 字体盒子 (fontbox) ---
+\newcommand{\fontbox}[1]{%
+  \raisebox{0.15ex}{#1}%
+}
+
+% --- 悬挂段落 (indentpara) ---
+\newcommand{\indentpara}[1]{%
+  \noindent\hangindent=#1 \hangafter=0%
+}

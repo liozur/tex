@@ -1,0 +1,429 @@
+% ----------------------------------------------------------
+% 目录与标题
+% ----------------------------------------------------------
+
+\ctexset{
+  tocdepth    = 10,
+  secnumdepth = 6,
+}
+
+\renewcommand{\contentsname}{%
+  \CJKfamily{xb}%
+  \fontsize{16.5bp}{16.5bp}\selectfont\ziju{1.500}%
+  目录%
+}
+
+% --------------------------------------
+% part
+% --------------------------------------
+
+\titlecontents{part}[0bp]%
+{%
+  \fontspec{Berthold Baskerville Book}[Path=fonts/]%
+  \fontsize{14.5bp}{14.5bp}\selectfont\ziju{0.100}%
+  \centering%
+  \vspace{7.5bp}%
+}%
+{}%
+{}%
+{}[\vspace{5.5bp}]%
+
+\newcommand\partbox{%
+  \centering%
+  \begin{minipage}{0.80\textwidth}%
+    \fontspec{Berthold Baskerville Book}[Path=fonts/]%
+    \fontsize{32.0bp}{32.0bp}\selectfont\ziju{0.100}%
+    \centering%
+  }
+
+\titleformat{\part}[display]%
+  {\partbox}{}{0bp}%
+  {}[%
+\end{minipage}]
+
+\ctexset{
+  part / name   = ,
+  part / number = \hspace{-1em},
+}
+
+\ctexset{
+  part / fixskip    = true,
+  part / afterskip  = ,
+  part / beforeskip = ,
+}
+
+% --------------------------------------
+% chapter
+% --------------------------------------
+
+\titlecontents{chapter}[0bp]%
+{%
+  \CJKfamily{xb}%
+  \fontsize{9.5bp}{9.5bp}\selectfont\ziju{0.150}%
+  \vspace{3bp}%
+}%
+{}%
+{}%
+{\hspace{3bp}\titlerule*[.4em]{$\cdot$}\contentspage}
+
+\newcommand\chapterbox{%
+  \centering%
+  \begin{minipage}{0.80\textwidth}%
+    \modifiedmodifiedxb%
+    \fontsize{16.5bp}{18.0bp}\selectfont\ziju{0.050}%
+    \centering%
+  }
+
+\titleformat{\chapter}[display]%
+  {\chapterbox}{}{0bp}%
+  {}[%
+\end{minipage}]
+
+\titlespacing{\chapter}%
+{0bp}%
+{0bp}%
+{18.0bp}%
+
+\ctexset{
+  chapter / fixskip    = true,
+  chapter / afterskip  = ,
+  chapter / beforeskip = ,
+}
+
+% --------------------------------------
+% chapterx
+% --------------------------------------
+
+\titleclass{\chapterx}{straight}[\part]
+
+\newcounter{chapterx}[part]
+\renewcommand\thechapterx{\hspace{-1em}}
+
+\titlecontents{chapterx}[0bp]%
+{%
+  \CJKfamily{fs}%
+  \fontsize{10.5bp}{10.5bp}\selectfont\ziju{0.050}%
+  \vspace{3bp}%
+}%
+{}%
+{}%
+{\hspace{3bp}\titlerule*[.4em]{$\cdot$}\contentspage}
+
+\newcommand\chapterxbox{%
+  \centering%
+  \begin{minipage}{0.80\textwidth}%
+    \modifiedmodifiedxb%
+    \fontsize{16.5bp}{18.0bp}\selectfont\ziju{0.050}%
+    \centering%
+  }
+
+\titleformat{\chapterx}[display]%
+  {\chapterxbox}{}{0bp}%
+  {}[%
+\end{minipage}]
+
+\titlespacing{\chapterx}%
+{0bp}%
+{0bp}%
+{18.0bp}%
+
+% --------------------------------------
+% section
+% --------------------------------------
+
+\titlecontents{section}[2em]%
+{%
+  \CJKfamily{fs}%
+  \fontsize{9.5bp}{9.5bp}\selectfont\ziju{-0.050}%
+  \vspace{3bp}%
+}%
+{\contentspush{\thecontentslabel\hspace{1em}}}%
+{}%
+{\hspace{3bp}\titlerule*[.4em]{$\cdot$}\contentspage}
+
+\newcommand\sectionbox{%
+  \centering%
+  \begin{minipage}{0.50\textwidth}%
+    \modifiedmodifiedxh%
+    \fontsize{14.5bp}{15.5bp}\selectfont\ziju{0.025}%
+    \centering%
+  }
+
+\titleformat{\section}[display]%
+  {\sectionbox}%
+  {\ziju{0.5}第\chinese{section}篇}%
+  {5.0bp}%
+  {}%
+  [%
+\end{minipage}]
+
+\ctexset{
+  section / name   = {第,篇},
+  section / number = \chinese{section},
+}
+
+\ctexset{
+  section / fixskip    = true,
+  section / afterskip  = ,
+  section / beforeskip = ,
+}
+
+\titlespacing{\section}%
+{0bp}%
+{28.0bp}%
+{26.0bp}%
+
+% --------------------------------------
+% subsection
+% --------------------------------------
+
+\titlecontents{subsection}[2em]%
+{%
+  \CJKfamily{ss}%
+  \fontsize{9.0bp}{9.0bp}\selectfont\ziju{0.010}%
+  \vspace{3bp}%
+}%
+{\contentspush{\thecontentslabel\hspace{1em}}}%
+{}%
+{\hspace{3bp}\titlerule*[.4em]{$\cdot$}\contentspage}
+
+\newcommand\subsectionbox{%
+  \centering%
+  \begin{minipage}{0.70\textwidth}%
+    \modifiedmodifiedss%
+    \fontsize{14.0bp}{15.0bp}\selectfont\ziju{0.025}%
+    \centering%
+  }
+
+\titleformat{\subsection}[display]%
+  {\subsectionbox}%
+  {\ziju{0.5}第\chinese{subsection}章}%
+  {5.0bp}%
+  {}%
+  [%
+\end{minipage}]
+
+\ctexset{
+  subsection / name   = {第,章},
+  subsection / number = \chinese{subsection},
+}
+
+\ctexset{
+  subsection / fixskip    = true,
+  subsection / afterskip  = ,
+  subsection / beforeskip = ,
+}
+
+\titlespacing{\subsection}%
+{0bp}%
+{14.5bp}%
+{13.0bp}%
+
+% --------------------------------------
+% subsubsection
+% --------------------------------------
+
+\titlecontents{subsubsection}[4em]%
+{%
+  \CJKfamily{ss}%
+  \fontsize{9.0bp}{9.0bp}\selectfont\ziju{0.010}%
+  \vspace{3bp}%
+}%
+{\contentspush{\thecontentslabel\hspace{1em}}}%
+{}%
+{\hspace{3bp}\titlerule*[.4em]{$\cdot$}\contentspage}
+
+\newcommand\subsubsectionbox[1]{%
+  \begin{center}%
+    \begin{minipage}{0.60\textwidth}%
+      \modifiedmodifiedss%
+      \fontsize{12.5bp}{14.5bp}\selectfont\ziju{0.025}%
+      \centering%
+      #1%
+    \end{minipage}%
+  \end{center}%
+}
+
+\ctexset{
+  subsubsection / name       = {,．},
+  subsubsection / number     = \arabic{subsubsection},
+  subsubsection / format     = \subsubsectionbox,
+  subsubsection / aftername  = ,
+}
+
+\ctexset{
+  subsubsection / fixskip    = true,
+  subsubsection / afterskip  = ,
+  subsubsection / beforeskip = ,
+}
+
+\titlespacing{\subsubsection}%
+{0bp}%
+{19.5bp}%
+{9.0bp}%
+
+% --------------------------------------
+% paragraph
+% --------------------------------------
+
+\titlecontents{paragraph}[6em]%
+{%
+  \CJKfamily{ss}%
+  \fontsize{9.0bp}{9.0bp}\selectfont\ziju{0.010}%
+  \vspace{3bp}%
+}%
+{\contentspush{\thecontentslabel\hspace{1em}}}%
+{}%
+{\hspace{3bp}\titlerule*[.4em]{$\cdot$}\contentspage}
+
+\newcommand\paragraphbox[1]{%
+  \begin{center}%
+    \begin{minipage}{0.80\textwidth}%
+      \modifiedmodifiedss%
+      \fontsize{12.5bp}{12.5bp}\selectfont\ziju{0.010}%
+      \centering%
+      #1%
+    \end{minipage}%
+  \end{center}%
+}
+
+\ctexset{
+  paragraph / name       = {,．},
+  paragraph / number     = \Alph{paragraph},
+  paragraph / format     = \paragraphbox,
+  paragraph / aftername  = ,
+}
+
+\ctexset{
+  paragraph / fixskip    = true,
+  paragraph / afterskip  = ,
+  paragraph / beforeskip = ,
+}
+
+\titlespacing{\paragraph}%
+{0bp}%
+{18.0bp}%
+{9.0bp}%
+
+% --------------------------------------
+% subparagraph
+% --------------------------------------
+
+\titlecontents{subparagraph}[8em]%
+{%
+  \CJKfamily{ss}%
+  \fontsize{9.0bp}{9.0bp}\selectfont\ziju{0.010}%
+  \vspace{3bp}%
+}%
+{\contentspush{\thecontentslabel\hspace{1em}}}%
+{}%
+{\hspace{3bp}\titlerule*[.4em]{$\cdot$}\contentspage}
+
+\newcommand\subparagraphbox[1]{%
+  \begin{center}%
+    \begin{minipage}{0.80\textwidth}%
+      \CJKfamily{ht}%
+      \fontsize{10.5bp}{10.5bp}\selectfont\ziju{0.010}%
+      \centering%
+      #1%
+    \end{minipage}%
+  \end{center}%
+}
+
+\ctexset{
+  subparagraph / name         = {\CJKfamily{ss}（,\CJKfamily{ss}）},
+  subparagraph / number       = \arabic{subparagraph},
+  subparagraph / format       = \subparagraphbox,
+  subparagraph / numberformat = \bf,
+  subparagraph / aftername    = ,
+}
+
+\ctexset{
+  subparagraph / fixskip      = true,
+  subparagraph / afterskip    = ,
+  subparagraph / beforeskip   = ,
+}
+
+\titlespacing{\subparagraph}%
+{0bp}%
+{0bp}%
+{-1bp}%
+
+% ------------------------------------------------------------------------------
+% 重命名
+%
+% \tyear          -> 年份标题 (可选)
+% \tdoc           -> 文献标题
+% \tpart          -> 篇 (可选)
+% \tchapter       -> 章
+% \tsection       -> 节 (如: 1.)
+% \tsubsection    -> 子节 (如: A.)
+% \tsubsubsection -> 小节 (如: (1))
+% ------------------------------------------------------------------------------
+
+\newcommand{\tyear}[1]{%
+  \cleardoublepage%
+  \thispagestyle{empty}%
+  \part{#1}\label{#1}%
+}
+
+\newcommand{\tdoc}[1]{%
+  \cleardoublepage%
+  \thispagestyle{empty}%
+  \let\oldthispagestyle\thispagestyle%
+  \renewcommand{\thispagestyle}[1]{}%
+  \chapter{#1}\label{#1}%
+  \let\thispagestyle\oldthispagestyle%
+}
+
+\newcommand{\tpart}[1]{%
+  \cleardoublepage%
+  \section{#1}\label{#1}%
+}
+
+\newcommand{\tpartnonum}[1]{%
+  \cleardoublepage%
+  \section*{#1}\label{#1}%
+  \addcontentsline{toc}{section}{#1}%
+  \partmark{#1}%
+}
+
+\newcommand{\tchapter}[1]{%
+  \clearpage%
+  \subsection{#1}\label{#1}%
+}
+
+\newcommand{\tchapternonum}[1]{%
+  \clearpage%
+  \subsection*{#1}\label{#1}%
+  \addcontentsline{toc}{subsection}{#1}%
+  \chaptermark{#1}%
+}
+
+\newcommand{\tsection}[1]{%
+  \subsubsection{#1}\label{#1}%
+}
+
+\newcommand{\tsectionnonum}[1]{%
+  \subsubsection*{#1}\label{#1}%
+  \addcontentsline{to}{subsubsection}{#1}%
+  \sectionmark{#1}%
+}
+
+\newcommand{\tsubsection}[1]{%
+  \paragraph{#1}\label{#1}%
+}
+
+\newcommand{\tsubsectionnonum}[1]{%
+  \paragraph*{#1}\label{#1}%
+  \addcontentsline{toc}{paragraph}{#1}%
+}
+
+\newcommand{\tsubsubsection}[1]{%
+  \subparagraph{#1}\label{#1}%
+}
+
+\newcommand{\tsubsubsectionnonum}[1]{%
+  \subparagraph*{#1}\label{#1}%
+  \addcontentsline{toc}{subparagraph}{#1}%
+}
